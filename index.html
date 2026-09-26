@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flowclient soon...</title>
+  <meta name="description" content="2rq1's personal bio page. flowclient soon..">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/avatar.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Background Video -->
+  <video class="bg-video" id="bgVideo" autoplay muted playsinline>
+    <source src="4K - Samurai Autumn.mp4" type="video/mp4">
+  </video>
+  <div class="bg-overlay"></div>
+
+  <!-- Click to Enter -->
+  <div class="entry-overlay" id="entryOverlay">
+    <div class="entry-inner">
+      <div class="entry-avatar">
+        <img src="assets/avatar.png" alt="avatar">
+      </div>
+      <div class="entry-text">Click anywhere to enter</div>
+    </div>
+  </div>
+
+  <!-- Sound Toggle — Top Left -->
+  <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+    <!-- Volume on icon (default) -->
+    <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+    </svg>
+  </button>
+
+  <!-- View Counter — Bottom Left -->
+  <div class="view-counter" id="viewCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+    <span id="viewCount">0</span>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="fadinglight - angels (Sped Up) (SPOTISAVER).mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="page">
+
+    <!-- ================ HERO SECTION ================ -->
+    <section class="hero-section">
+      <div class="profile-card" id="profileCard">
+      <div class="profile">
+
+        <!-- Avatar -->
+        <div class="avatar-container">
+          <div class="avatar-ring">
+            <img src="assets/avatar.png" alt="2rq1" id="avatarImg">
+          </div>
+          <div class="status-dot offline" id="statusDot" title="Offline"></div>
+        </div>
+
+        <!-- Username -->
+        <h1 class="username">unnezy</h1>
+        <span class="handle">@2rq1</span>
+
+        <!-- Badges -->
+        <div class="badges">
+          <!-- Owner Badge (Crown) -->
+          <div class="badge">
+            <span class="badge-tooltip">Owner</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 20h20"></path>
+              <path d="M4 20V10l4 4 4-8 4 8 4-4v10"></path>
+            </svg>
+          </div>
+
+          <!-- Premium Badge (Diamond) -->
+          <div class="badge">
+            <span class="badge-tooltip">Premium</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3h12l4 6-10 13L2 9z"></path>
+              <path d="M2 9h20"></path>
+              <path d="M10 3l-2 6 4 13"></path>
+              <path d="M14 3l2 6-4 13"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <p class="bio" id="bioText"></p>
+
+        <!-- Social Icons -->
+        <div class="socials">
+          <!-- Discord -->
+          <a href="https://discord.gg/xVWhMh8nD" target="_blank" rel="noopener noreferrer" class="social-link" title="Discord">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      </div>
+
+      <!-- Scroll for more -->
+      <div class="scroll-indicator">
+        <span>Scroll for more</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ================ ABOUT ME SECTION ================ -->
+    <section class="about-section" id="aboutSection">
+      <div class="about-content" id="aboutContent">
+        <h2 class="about-title">about me</h2>
+
+        <div class="info-cards">
+          <!-- User Card -->
+          <div class="user-card">
+            <div class="user-card-avatar">
+              <img src="assets/avatar.png" alt="2rq1">
+            </div>
+            <div class="user-card-info">
+              <span class="user-card-name">unnezy</span>
+              <span class="user-card-status offline-text" id="aboutStatus">offline</span>
+            </div>
+          </div>
+
+          <!-- Timezone Card -->
+          <div class="timezone-card">
+            <div class="tz-time">
+              <div class="tz-clock" id="tzClock">
+                <span class="digit-slot" data-pos="h1"><span class="digit-inner">0</span></span><span class="digit-slot" data-pos="h2"><span class="digit-inner">0</span></span><span class="tz-sep">:</span><span class="digit-slot" data-pos="m1"><span class="digit-inner">0</span></span><span class="digit-slot" data-pos="m2"><span class="digit-inner">0</span></span><span class="tz-sep">:</span><span class="digit-slot" data-pos="s1"><span class="digit-inner">0</span></span><span class="digit-slot" data-pos="s2"><span class="digit-inner">0</span></span>
+              </div>
+              <div class="tz-date" id="tzDate">--</div>
+            </div>
+            <div class="tz-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Berlin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Programming Languages -->
+        <div class="languages">
+          <div class="lang-badge">
+            <svg class="lang-icon" viewBox="0 0 32 32" style="color:#000080">
+              <circle cx="16" cy="16" r="10.5" fill="currentColor"/>
+              <circle cx="16" cy="11.5" r="3.2" fill="#fff"/>
+              <circle cx="23.5" cy="8.5" r="3" fill="currentColor"/>
+            </svg>
+            Lua
+          </div>
+          <div class="lang-badge">
+            <svg class="lang-icon" viewBox="0 0 32 32" fill="none">
+              <path d="M4 2h24l-2.18 24.56L16 30l-9.82-3.44L4 2z" fill="#E44D26"/>
+              <path d="M16 4v23.77l7.93-2.2L25.66 4H16z" fill="#F16529"/>
+              <path d="M10.3 10h11.4l-.37 4H13.5l.36 4h7.5l-.56 6.27L16 25.8l-4.8-1.53-.33-3.77h3.5l.17 1.9 1.46.4 1.47-.4.15-1.7H10.7L10.3 10z" fill="#fff"/>
+            </svg>
+            HTML
+          </div>
+          <div class="lang-badge">
+            <svg class="lang-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#3572A5">
+              <path d="M9.585 11.692h4.328s2.432.039 2.432-2.35V5.391S16.714 3 11.936 3C7.362 3 7.647 4.986 7.647 4.986l.006 2.055h4.363v.617H6.476S3.5 7.26 3.5 11.74c0 4.482 2.598 4.322 2.598 4.322h1.55v-2.08s-.084-2.598 2.556-2.598l.001.001zm-.254-5.381a.83.83 0 1 1 .001 1.66.83.83 0 0 1-.001-1.66z"/>
+              <path d="M14.415 12.308h-4.328s-2.432-.039-2.432 2.35v3.951s-.369 2.391 4.409 2.391c4.573 0 4.288-1.986 4.288-1.986l-.006-2.055h-4.363v-.617h5.54S20.5 16.74 20.5 12.26c0-4.482-2.598-4.322-2.598-4.322h-1.55v2.08s.084 2.598-2.556 2.598l-.001-.001zm.254 5.381a.83.83 0 1 1-.001-1.66.83.83 0 0 1 .001 1.66z"/>
+            </svg>
+            Python
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
