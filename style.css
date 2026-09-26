@@ -1,0 +1,785 @@
+/* ==========================================================================
+   Flow Client Bio — guns.lol Inspired Clean Dark Aesthetic
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #000000;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  --text: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #ffffff;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --radius: 12px;
+  --radius-full: 9999px;
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+  cursor: none;
+}
+
+/* Background Video */
+.bg-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -2;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
+}
+
+.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Custom Cursor */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease, opacity 0.2s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.cursor-dot.clicking {
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+.cursor-ring.clicking {
+  width: 24px;
+  height: 24px;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.cursor-ring.hovering {
+  width: 44px;
+  height: 44px;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Ensure interactive elements hide cursor too */
+a, button, .badge, .lang-badge, .social-link, .entry-overlay {
+  cursor: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+
+::selection {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Click to Enter Overlay
+   -------------------------------------------------------------------------- */
+.entry-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.entry-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entry-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  user-select: none;
+}
+
+.entry-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.entry-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.entry-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.entry-overlay:hover .entry-text {
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Sound Toggle — Top Left
+   -------------------------------------------------------------------------- */
+.sound-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition);
+  opacity: 0;
+  animation: fadeIn 0.4s ease 0.6s forwards;
+}
+
+.sound-toggle:hover {
+  color: #fff;
+}
+
+.sound-toggle svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* --------------------------------------------------------------------------
+   View Counter — Bottom Left
+   -------------------------------------------------------------------------- */
+.view-counter {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  opacity: 0;
+  animation: fadeIn 0.4s ease 0.8s forwards;
+}
+
+.view-counter svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   Page Layout
+   -------------------------------------------------------------------------- */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Section 1: Hero Bio (100vh) */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 60px 20px 100px;
+}
+
+/* Section 2: About Me */
+.about-section {
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   Profile Card (Hero) — Semi-transparent container with hover tilt
+   -------------------------------------------------------------------------- */
+.profile-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 44px 60px;
+  width: 520px;
+  max-width: 90vw;
+  transform-style: preserve-3d;
+  will-change: transform;
+  opacity: 0;
+  animation: slideUp 0.5s ease 0.3s forwards;
+}
+
+.profile-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Avatar */
+.avatar-container {
+  position: relative;
+  width: 130px;
+  height: 130px;
+}
+
+.avatar-ring {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  padding: 3px;
+  background: rgba(255,255,255,0.08);
+  transition: background var(--transition);
+}
+
+.avatar-container:hover .avatar-ring {
+  background: rgba(255,255,255,0.14);
+}
+
+.avatar-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Online status dot */
+.status-dot {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  background: var(--text-dim);
+  transition: background 0.3s ease;
+}
+
+.status-dot.online {
+  background: var(--green);
+}
+
+.status-dot.idle {
+  background: var(--yellow);
+}
+
+.status-dot.dnd {
+  background: var(--red);
+}
+
+.status-dot.offline {
+  background: var(--text-dim);
+}
+
+/* Username & Handle */
+.username {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.handle {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-top: -6px;
+}
+
+/* Badges Row */
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  cursor: default;
+}
+
+.badge svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.badge:hover svg {
+  color: #fff;
+}
+
+/* Badge Tooltip */
+.badge-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(24, 24, 27, 0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  backdrop-filter: blur(8px);
+}
+
+.badge-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(24, 24, 27, 0.95);
+}
+
+.badge:hover .badge-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Bio Text */
+.bio {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  text-align: center;
+  max-width: 360px;
+  line-height: 1.5;
+  min-height: 1.5em;
+}
+
+.bio-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--text-secondary);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 0.6s step-end infinite;
+}
+
+/* Social Icons Row */
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  transition: color var(--transition), background var(--transition);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Indicator
+   -------------------------------------------------------------------------- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeIn 0.4s ease 1s forwards;
+}
+
+.scroll-indicator span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+
+.scroll-indicator svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  animation: bounceDown 2s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   About Me Section
+   -------------------------------------------------------------------------- */
+.about-content {
+  width: 100%;
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.about-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin-bottom: 28px;
+  letter-spacing: -0.02em;
+}
+
+/* Info Cards Row */
+.info-cards {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* User Card */
+.user-card {
+  flex: 1;
+  min-width: 240px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.user-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.user-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.user-card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-card-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.user-card-status {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--green);
+}
+
+.user-card-status.offline-text {
+  color: var(--text-dim);
+}
+
+/* Timezone Card */
+.timezone-card {
+  flex: 1;
+  min-width: 220px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.timezone-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.tz-time {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tz-clock {
+  display: flex;
+  align-items: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.digit-slot {
+  display: inline-block;
+  width: 0.72em;
+  height: 1.3em;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.digit-inner {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.digit-inner.roll-out {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.digit-inner.roll-in {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: none;
+}
+
+.tz-sep {
+  opacity: 0.5;
+  margin: 0 1px;
+}
+
+.tz-date {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.tz-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.tz-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.tz-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Language Badges */
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.lang-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+  cursor: default;
+}
+
+.lang-badge:hover {
+  border-color: var(--border-hover);
+  color: #fff;
+  background: var(--bg-card-hover);
+}
+
+.lang-badge .lang-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Toast
+   -------------------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(24, 24, 27, 0.92);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 500;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(6px); }
+  60% { transform: translateY(3px); }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .profile-card { padding: 30px 24px; }
+  .username { font-size: 1.35rem; }
+  .avatar-ring { width: 110px; height: 110px; }
+  .avatar-container { width: 110px; height: 110px; }
+  .info-cards { flex-direction: column; }
+  .about-content { padding: 0 4px; }
+}
