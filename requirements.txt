@@ -1,0 +1,2 @@
+Flask==3.0.0
+discord-interactions==0.4.0
